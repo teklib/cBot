@@ -2,12 +2,21 @@ from cBot_perp_ftx import cBot_perp_ftx
 import ta
 import pandas as pd
 
-ftx = cBot_perp_ftx(
-        apiKey='',
-        secret='',
-        subAccountName=''
-    )
 
+f = open('./secret.json',)
+secret = json.load(f)
+f.close()
+
+now = datetime.now()
+current_time = now.strftime("%d/%m/%Y %H:%M:%S")
+print("alligator perpetual -> Execution Time :", current_time)
+
+ftx = cBot_perp_ftx(
+        apiKey=secret[strategy_name]["public_key"],
+        secret=secret[strategy_name]["private_key"],
+        subAccountName=secret[strategy_name]["subaccount_name"]
+)
+  
 # -- Strategy variable --
 perpSymbol = 'EGLD-PERP'
 leverage = 2
@@ -63,7 +72,7 @@ def closeShortCondition(row):
         return False
 
 # -- Get USD amount on Sub Account --
-usdAmount = ftx.get_balance_of_one_coin('USD')
+usdAmount = ftx.get_balanccat e_of_one_coin('USD')
 
 # -- Get actual price --
 actualPrice = df.iloc[-1]['close']

@@ -35,7 +35,7 @@ else
 fi
 
 secret_content=`cat secret.json`
-$secret_content | jq '. + { "'"$strategy_name"'_'"$symbol1"':{"public_key" : "'"$public_key"'","private_key" : "'"$private_key"'","subaccount_name" : "'"$subaccount_name"'","symbol1" : "'"$symbol1"'","token_bot_discord" : "'"$token_bot_discord"'"} }' secret.json > tmp.$$.json && mv tmp.$$.json secret.json
+$secret_content | jq '. + { "'"$strategy_name"'_'"$symbol1"'":{"public_key" : "'"$public_key"'","private_key" : "'"$private_key"'","subaccount_name" : "'"$subaccount_name"'","symbol1" : "'"$symbol1"'","token_bot_discord" : "'"$token_bot_discord"'"} }' secret.json > tmp.$$.json && mv tmp.$$.json secret.json
 
 croncmd="cd "$folder_name";python3 "$strategy_name".py "$symbol1" "$symbol2" > cronlog.log"
 cronjob="0 * * * * $croncmd"
